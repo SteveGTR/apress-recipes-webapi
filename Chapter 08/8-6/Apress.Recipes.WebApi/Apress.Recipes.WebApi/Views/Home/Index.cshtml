@@ -57,7 +57,7 @@
                     data: JSON.stringify({ Title: self.newBook.Title(), Author: self.newBook.Author() })
                 })
                     .done(function(data) {
-                        self.books.push(data);
+                        self.addBook(book);
                     })
                     .fail(function(xhr, status, error) {
                         alert(status);
