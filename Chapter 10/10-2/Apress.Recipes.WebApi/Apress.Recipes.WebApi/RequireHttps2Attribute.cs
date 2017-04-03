@@ -6,7 +6,7 @@ using System.Web.Http.Filters;
 
 namespace Apress.Recipes.WebApi
 {
-    public class RequireHttps2Attribute : IAuthenticationFilter
+    public class RequireHttps2Attribute : Attribute, IAuthenticationFilter
     {
         public bool AllowMultiple
         {
@@ -17,11 +17,7 @@ namespace Apress.Recipes.WebApi
         {
             if (context.Request.RequestUri.Scheme != Uri.UriSchemeHttps)
             {
-                context.ActionContext.Response = new HttpResponseMessage(System.Net.HttpStatusCode.Forbidden)
-                {
-                    ReasonPhrase = "HTTPS Required"
-                };
-
+                context.ErrorResult = new ErrorResult(context.Request, HttpStatusCode.Forbidden, "HTTPS Required");
             }
 
             return Task.FromResult(true);
