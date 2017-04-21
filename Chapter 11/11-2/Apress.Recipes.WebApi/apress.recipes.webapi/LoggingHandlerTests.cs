@@ -11,10 +11,13 @@ namespace Apress.Recipes.WebApi
         [Fact]
         public async void WhenCalledShouldLogTheRequestUrl()
         {
+            HttpConfiguration config = new HttpConfiguration();
+
             var mockLogger = new Mock<ILoggingService>();
             var handler = new LoggingHandler
             {
-                LoggingService = mockLogger.Object
+                LoggingService = mockLogger.Object,
+                InnerHandler = new HttpControllerDispatcher(config)
             };
 
             var invoker = new HttpMessageInvoker(handler);
